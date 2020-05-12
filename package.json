@@ -1,0 +1,49 @@
+{
+    "name": "passportjs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "nodemon",
+        "inspect": "nodemon --inspect src/app.ts"
+    },
+    "keywords": [],
+    "author": "Bbaktaeho",
+    "license": "ISC",
+    "dependencies": {
+        "argon2": "^0.26.2",
+        "bluebird": "^3.7.2",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "helmet": "^3.22.0",
+        "hpp": "^0.2.3",
+        "moment": "^2.25.3",
+        "moment-timezone": "^0.5.28",
+        "morgan": "^1.10.0",
+        "mysql2": "^2.1.0",
+        "passport": "^0.4.1",
+        "passport-local": "^1.0.0",
+        "sequelize": "^5.21.8",
+        "validator": "^13.0.0",
+        "winston": "^3.2.1"
+    },
+    "devDependencies": {
+        "@types/bluebird": "^3.5.30",
+        "@types/cors": "^2.8.6",
+        "@types/express": "^4.17.6",
+        "@types/express-session": "^1.17.0",
+        "@types/helmet": "0.0.47",
+        "@types/hpp": "^0.2.1",
+        "@types/morgan": "^1.9.0",
+        "@types/node": "^13.13.5",
+        "@types/passport": "^1.0.3",
+        "@types/passport-local": "^1.0.33",
+        "@types/validator": "^13.0.0",
+        "nodemon": "^2.0.3",
+        "ts-node": "^8.10.1",
+        "typescript": "^3.8.3"
+    }
+}
