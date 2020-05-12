@@ -23,7 +23,7 @@ export default async ({ app }: { app: express.Application }): Promise<void> => {
      */
     app.get('/favicon.ico', (req, res) => res.status(204));
     app.get('/', (req, res) => res.send('root!'));
-    app.use('/api', routes());
+    app.use(config.api.prefix, routes());
     app.use((req, res, next) => {
         const err = new Error('Not Found');
         next(err);
