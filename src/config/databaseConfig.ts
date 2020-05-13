@@ -9,7 +9,6 @@ export default {
         host: process.env.MARIADB_LOCAL_HOST!,
         logging: false,
         dialect: 'mariadb',
-        timezone: '+09:00',
     },
     test: {
         username: 'root',
@@ -18,7 +17,6 @@ export default {
         host: process.env.MARIADB_LOCAL_HOST!,
         logging: false,
         dialect: 'mysql',
-        timezone: '+09:00',
     },
     production: {
         username: 'root',
@@ -27,6 +25,5 @@ export default {
         host: process.env.MARIADB_LOCAL_HOST!,
         logging: false,
         dialect: 'mysql',
-        timezone: '+09:00',
     },
 };

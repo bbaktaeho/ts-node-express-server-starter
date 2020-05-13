@@ -9,7 +9,7 @@ import { sequelize } from '../models';
 
 export default async ({ expressApp }: { expressApp: Application }) => {
     try {
-        await sequelize.sync({ force: false });
+        await sequelize.sync({ force: false, alter: false });
         logger.info('🤩 databse loaded and connected');
 
         await expressLoader({ app: expressApp });

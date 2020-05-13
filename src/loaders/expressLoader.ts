@@ -1,10 +1,15 @@
+import config from '../config';
 import express from 'express';
+import session from 'express-session';
+import flash from 'connect-flash';
+import passport from 'passport';
+import passportConfig from '../config/passportConfig';
+import sessionConfig from '../config/sessionConfig';
 import cors from 'cors';
 import hpp from 'hpp';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import routes from '../api';
-import config from '../config';
 
 export default async ({ app }: { app: express.Application }): Promise<void> => {
     if (process.env.NODE_ENV === 'production') {
@@ -14,9 +19,14 @@ export default async ({ app }: { app: express.Application }): Promise<void> => {
     } else {
         app.use(morgan('dev'));
     }
-    app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
+    app.use(session(sessionConfig)); // 1. express 에서 세션 활성화
+    app.use(flash()); // 1-1. 플래시 메모리 활성화
+    app.use(passport.initialize()); // 2. passport 구동
+    app.use(passport.session()); // 3. passport 에게 session 연결
+    passportConfig(); // 4. passport 전략 구성
+    app.use(cors());
 
     /**
      * * routes

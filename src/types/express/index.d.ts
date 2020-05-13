@@ -2,6 +2,8 @@ import {} from '../../config';
 
 declare global {
     namespace Express {
-        export interface Request {}
+        export interface Request {
+            user?: User;
+        }
     }
 }

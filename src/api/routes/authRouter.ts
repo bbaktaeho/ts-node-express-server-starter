@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
-import { registerValidator } from '../middlewares/validators';
+import { registerValidator, loginValidator } from '../middlewares/validators';
+import { localAuthenticate } from '../middlewares/auth';
 import { Container } from 'typedi';
 import AuthService from '../../services/authService';
 import { UserDTO } from '../../interfaces/userDTO';
@@ -14,6 +15,15 @@ export default (app: Router) => {
         if (!success) return res.status(409).json({ success, message: result });
         res.status(201).json({ success: true, message: '가입 성공', user: result });
     });
-    router.post('/login', (req, res) => {});
+
+    // 로그인 인증 실패
+    router.get('/login', (req, res) => {
+        res.status(401).json({ success: false, message: req.flash().error[0] });
+    });
+    // 로그인 인증 성공
+    router.post('/login', loginValidator, localAuthenticate(), (req, res) => {
+        res.status(201).json({ success: true, message: '로그인 성공' });
+    });
+
     router.post('/logout', (req, res) => {});
 };
