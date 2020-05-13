@@ -7,7 +7,7 @@ class User extends Model {
     public password!: string;
     public name!: string;
     public nickname!: string;
-    public phone!: string;
+    public phone?: string;
     // ...
     // createdAt and updatedAt 자동 생성됨
 }
@@ -18,6 +18,7 @@ User.init(
         name: { type: DataTypes.STRING(20), allowNull: false },
         nickname: { type: DataTypes.STRING(20), allowNull: false, unique: true },
         password: { type: DataTypes.STRING(100), allowNull: false },
+        phone: { type: DataTypes.STRING, allowNull: true },
     },
     {
         sequelize,

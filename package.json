@@ -18,6 +18,7 @@
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "express-session": "^1.17.1",
+        "express-validator": "^6.4.1",
         "helmet": "^3.22.0",
         "hpp": "^0.2.3",
         "mariadb": "^2.3.1",
