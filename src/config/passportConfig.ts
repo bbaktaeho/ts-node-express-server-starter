@@ -6,7 +6,7 @@ import argon2 from 'argon2';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export default (select: string = 'session') => {
+export default () => {
     const JwtStrategy = passportJwt.Strategy;
     const ExtractJwt = passportJwt.ExtractJwt;
     const LocalStrategy = passportLocal.Strategy;
@@ -16,7 +16,7 @@ export default (select: string = 'session') => {
             {
                 usernameField: 'email',
                 passwordField: 'password',
-                session: select === 'session' ? true : false,
+                session: false,
                 passReqToCallback: true,
             },
             async (req, email, password, done) => {
@@ -31,41 +31,39 @@ export default (select: string = 'session') => {
             }
         )
     );
-    if (select !== 'session')
-        passport.use(
-            new JwtStrategy(
-                {
-                    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-                    secretOrKey: process.env.JWT_SECRET!,
-                },
-                async (payload, done) => {
-                    try {
-                        const user = await User.findOne({ where: { id: payload.id } });
-                        if (!user) return done(null, false);
-                        done(null, user);
-                    } catch (err) {
-                        done(err, false);
-                    }
+    passport.use(
+        new JwtStrategy(
+            {
+                jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+                secretOrKey: process.env.JWT_SECRET!,
+            },
+            async (payload, done) => {
+                try {
+                    const user = await User.findOne({ where: { id: payload.id } });
+                    if (!user) return done(null, false);
+                    done(null, user);
+                } catch (err) {
+                    done(err, false);
                 }
-            )
-        );
-
-    if (select === 'session') {
-        // 전략에서 성공하고 done 을 통해 유저를 넘겨 받아 req.session.passport.user 에 저장함
-        passport.serializeUser<User, any>((user, done) => {
-            done(null, user.email);
-        });
-
-        // 실제 서버로 들어오는요청마다 세션 정보를 데이터베이스와 비교함
-        // 해당 정보가 존재하면 req.user 를 통해 다음 미들웨어에게 넘겨줌
-        passport.deserializeUser<User, any>(async (email, done) => {
-            try {
-                const user = await User.findOne({ where: { email } });
-                if (!user) return done(new Error('is not exists'));
-                done(null, user!);
-            } catch (err) {
-                done(err);
             }
-        });
-    }
+        )
+    );
+
+    // session 일 때만 사용
+    // // 전략에서 성공하고 done 을 통해 유저를 넘겨 받아 req.session.passport.user 에 저장함
+    // passport.serializeUser<User, any>((user, done) => {
+    //     done(null, user.email);
+    // });
+
+    // // 실제 서버로 들어오는요청마다 세션 정보를 데이터베이스와 비교함
+    // // 해당 정보가 존재하면 req.user 를 통해 다음 미들웨어에게 넘겨줌
+    // passport.deserializeUser<User, any>(async (email, done) => {
+    //     try {
+    //         const user = await User.findOne({ where: { email } });
+    //         if (!user) return done(new Error('is not exists'));
+    //         done(null, user!);
+    //     } catch (err) {
+    //         done(err);
+    //     }
+    // });
 };
