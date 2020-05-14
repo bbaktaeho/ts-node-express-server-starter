@@ -25,7 +25,7 @@ export default async ({ app }: { app: express.Application }): Promise<void> => {
     app.use(flash()); // 1-1. 플래시 메모리 활성화
     app.use(passport.initialize()); // 2. passport 구동
     app.use(passport.session()); // 3. passport 에게 session 연결
-    passportConfig(); // 4. passport 전략 구성
+    passportConfig('session'); // 4. passport 전략 또는 인증 방식 구성 (session, jwt)
     app.use(cors());
 
     /**

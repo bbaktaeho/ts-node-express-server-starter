@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
-import { registerValidator, loginValidator } from '../middlewares/validators';
-import { localAuthenticate } from '../middlewares/auth';
+import { registerValidator, loginValidator } from '../middlewares/validator';
+import { localAuthenticate } from '../middlewares/authenticate';
 import { Container } from 'typedi';
 import AuthService from '../../services/authService';
 import { UserDTO } from '../../interfaces/userDTO';
